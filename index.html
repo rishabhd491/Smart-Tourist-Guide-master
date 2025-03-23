@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Travel EZ</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<style>
+		body {
+			background: #f0f2f5;
+			min-height: 100vh;
+			display: flex;
+			align-items: center;
+		}
+		.search-form {
+			background: white;
+			padding: 30px;
+			border-radius: 10px;
+			box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-md-6">
+				<div class="search-form">
+					<h2 class="text-center mb-4">Travel EZ</h2>
+					<form action="search.php" method="GET">
+						<div class="form-group">
+							<label for="city">City</label>
+							<input type="text" class="form-control" id="city" name="city" required 
+								   placeholder="Enter city name">
+						</div>
+						<div class="form-group">
+							<label for="query">What are you looking for?</label>
+							<input type="text" class="form-control" id="query" name="query" required 
+								   placeholder="e.g., restaurants, hotels, attractions">
+						</div>
+						<button type="submit" class="btn btn-primary btn-block">Search</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+
+
+
