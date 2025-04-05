@@ -28,7 +28,21 @@
               var directionsService = new google.maps.DirectionsService();
               var directionsDisplay = new google.maps.DirectionsRenderer();
               directionsDisplay.setMap(map);
-              var request = {   travelMode: google.maps.TravelMode.DRIVING, optimizeWaypoints: true, waypoints: []  };
+
+              // Add traffic layer to show real-time traffic conditions
+              var trafficLayer = new google.maps.TrafficLayer();
+              trafficLayer.setMap(map);
+
+              var request = {   
+                travelMode: google.maps.TravelMode.DRIVING, 
+                optimizeWaypoints: true, 
+                waypoints: [],
+                // Add driving options for traffic information
+                drivingOptions: {
+                  departureTime: new Date(Date.now()),  // Current time
+                  trafficModel: google.maps.TrafficModel.BEST_GUESS // Best guess for traffic estimation
+                }
+              };
 
               // Listen for click on map
               google.maps.event.addListener(map, 'click', function(event){
@@ -104,7 +118,21 @@
                 }
             directionsService.route(request,function(response,status){
                 if (status == "OK"){
-                    directionsDisplay.setDirections(response)
+                    directionsDisplay.setDirections(response);
+                    
+                    // Add traffic info to UI
+                    var route = response.routes[0];
+                    var leg = route.legs[0];
+                    var trafficDuration = leg.duration_in_traffic ? leg.duration_in_traffic.text : leg.duration.text;
+                    var trafficInfo = document.createElement('div');
+                    trafficInfo.id = 'traffic-info';
+                    trafficInfo.innerHTML = '<h3>Traffic Information</h3>' +
+                                          '<p>Distance: ' + leg.distance.text + '</p>' +
+                                          '<p>Duration with Traffic: ' + trafficDuration + '</p>';
+                    
+                    // Insert the traffic info after the map
+                    var mapDiv = document.getElementById('map');
+                    mapDiv.parentNode.insertBefore(trafficInfo, mapDiv.nextSibling);
                 }
             })
             }

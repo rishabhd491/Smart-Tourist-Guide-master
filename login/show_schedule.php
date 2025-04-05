@@ -173,33 +173,45 @@ for($i = 1; $i < $_SESSION['index']; $i++){
 				return (google.maps.geometry.spherical.computeDistanceBetween(p1, p2) / 1000).toFixed(2);
 			}
 
-
-							// New map
+			// New map
 			var map = new google.maps.Map(document.getElementById('map'), options);
 			var directionsService = new google.maps.DirectionsService();
 			var directionsDisplay = new google.maps.DirectionsRenderer();
-              directionsDisplay.setMap(map);
-              var request = {   travelMode: google.maps.TravelMode.DRIVING, optimizeWaypoints: true, waypoints: []  };
+            directionsDisplay.setMap(map);
+              
+            // Add traffic layer to show real-time traffic conditions
+            var trafficLayer = new google.maps.TrafficLayer();
+            trafficLayer.setMap(map);
+              
+            var request = {   
+                travelMode: google.maps.TravelMode.DRIVING, 
+                optimizeWaypoints: true, 
+                waypoints: [],
+                // Add driving options for traffic information
+                drivingOptions: {
+                    departureTime: new Date(Date.now()),  // Current time
+                    trafficModel: google.maps.TrafficModel.BEST_GUESS // Best guess for traffic estimation
+                }
+            };
 
-              // Listen for click on map
-              google.maps.event.addListener(map, 'click', function(event){
+            // Listen for click on map
+            google.maps.event.addListener(map, 'click', function(event){
                 // Add marker
                 addMarker({coords:event.latLng});
-              });
+            });
 
-				var noOfMarker = <?php echo $_SESSION['index'] - 1;?>;
-              // Array of markers
-              var markers=[
-			  {
-				   coords:{lat:25.4920,lng:81.8639}
-           
-				  
-			  }];
+            var noOfMarker = <?php echo $_SESSION['index'] - 1;?>;
+            // Array of markers
+            var markers=[
+                {
+                    coords:{lat:25.4920,lng:81.8639}
+                }
+            ];
 				
-				var my_lat = <?php echo $_SESSION['mylat'];?>;
-				markers[0].coords.lat = parseFloat(my_lat);
-				var my_lng = <?php echo $_SESSION['mylng'];?>;
-				markers[0].coords.lng = parseFloat(my_lng);
+			var my_lat = <?php echo $_SESSION['mylat'];?>;
+			markers[0].coords.lat = parseFloat(my_lat);
+			var my_lng = <?php echo $_SESSION['mylng'];?>;
+			markers[0].coords.lng = parseFloat(my_lng);
 			  
 			var l_name = '<?php echo $venues; ?>';
 			var cs = '<?php echo $lat_long?>';
@@ -208,127 +220,195 @@ for($i = 1; $i < $_SESSION['index']; $i++){
 		
 			var l = ay.length-1;
 			var distance=new Array(l+1);
-			 for(var i=0; i <ay.length; i=i+2){
-				  //coords = new Object();
-				 lat = ay[i];
-				 lng = ay[i+1];
-				  lng=parseFloat(lng);
-				  lat=parseFloat(lat);
-				  temp={coords:{lat,lng}};
-				  markers.push(temp);
-			 }
+			for(var i=0; i <ay.length; i=i+2){
+				//coords = new Object();
+				lat = ay[i];
+				lng = ay[i+1];
+				lng=parseFloat(lng);
+				lat=parseFloat(lat);
+				temp={coords:{lat,lng}};
+				markers.push(temp);
+			}
 			 
 			  
-//calculates distance between two points in km's
-        var ct=1;
-		var mn=2000000;
-        for(var j=1;j<markers.length;j++)
-        {
-			var p1 = new google.maps.LatLng(markers[0].coords.lat,markers[0].coords.lng);
-			var p2 = new google.maps.LatLng(markers[j].coords.lat,markers[j].coords.lng);
-			distance[ct]=calcDistance(p1, p2);
-			if(mn > parseFloat(distance[ct])){
-				mn = distance[ct];
+			//calculates distance between two points in km's
+			var ct=1;
+			var mn=2000000;
+			for(var j=1;j<markers.length;j++)
+			{
+				var p1 = new google.maps.LatLng(markers[0].coords.lat,markers[0].coords.lng);
+				var p2 = new google.maps.LatLng(markers[j].coords.lat,markers[j].coords.lng);
+				distance[ct]=calcDistance(p1, p2);
+				if(mn > parseFloat(distance[ct])){
+					mn = distance[ct];
+				}
+				ct++;
 			}
-			ct++;
-        }
-        console.log("min distance="+mn);
-		
-		
-		for(var i=1; i < ct; i++){
-			var k = parseFloat(distance[i]);
-			var lat1 = markers[i].coords.lat;
-			var lng1 = markers[i].coords.lng;
-			var name_loc = loc_name[i];
+			console.log("min distance="+mn);
 			
-			var j = i - 1;
 			
-			while(j >= 1 && parseFloat(distance[j]) > k){
-				markers[j+1].coords.lat = markers[j].coords.lat;
-				markers[j+1].coords.lng = markers[j].coords.lng;
-				distance[j+1] = distance[j];
-				loc_name[j+1] = loc_name[j];
-				j--;
+			for(var i=1; i < ct; i++){
+				var k = parseFloat(distance[i]);
+				var lat1 = markers[i].coords.lat;
+				var lng1 = markers[i].coords.lng;
+				var name_loc = loc_name[i];
+				
+				var j = i - 1;
+				
+				while(j >= 1 && parseFloat(distance[j]) > k){
+					markers[j+1].coords.lat = markers[j].coords.lat;
+					markers[j+1].coords.lng = markers[j].coords.lng;
+					distance[j+1] = distance[j];
+					loc_name[j+1] = loc_name[j];
+					j--;
+				}
+				
+				
+				markers[j+1].coords.lat = lat1;
+				markers[j+1].coords.lng = lng1;
+				distance[j+1] = k;
+				loc_name[j+1] = name_loc;
 			}
 			
+			for(i=1; i<markers.length; i++){
+				btn = document.createElement("div");
+				btn.innerHTML = loc_name[i]+" &nbsp &nbsp &nbsp Distance:"+distance[i];
+		//		btn.setAttribute("class","btnsize");
+				btn.setAttribute("id","btn"+i);
+				btn.setAttribute("class", "class=btn btn-default btn-sm btn-block")
+				btn.setAttribute("onclick", "#");
+				document.getElementById("ven").appendChild(btn);
+			}
 			
-			markers[j+1].coords.lat = lat1;
-			markers[j+1].coords.lng = lng1;
-			distance[j+1] = k;
-			loc_name[j+1] = name_loc;
-		}
-		
-		for(i=1; i<markers.length; i++){
-			btn = document.createElement("div");
-			btn.innerHTML = loc_name[i]+" &nbsp &nbsp &nbsp Distance:"+distance[i];
-	//		btn.setAttribute("class","btnsize");
-			btn.setAttribute("id","btn"+i);
-			btn.setAttribute("class", "class=btn btn-default btn-sm btn-block")
-			btn.setAttribute("onclick", "#");
-			document.getElementById("ven").appendChild(btn);
-		}
-		
-		
+			// Add traffic information section
+			var trafficHeader = document.createElement("div");
+			trafficHeader.innerHTML = "<h3>Traffic Information</h3><p>Real-time traffic data will be shown when the route is calculated</p>";
+			trafficHeader.setAttribute("class", "traffic-header");
+			document.getElementById("ven").appendChild(trafficHeader);
+
+			var trafficInfo = document.createElement("div");
+			trafficInfo.setAttribute("id", "traffic-info");
+			document.getElementById("ven").appendChild(trafficInfo);
+			
 			var i;
-              // Loop through markers
-              for(i = 0;i < markers.length;i++){
-                // Add marker
-                addMarker(markers[i]);
-              }
+			// Loop through markers
+			for(i = 0;i < markers.length;i++){
+				// Add marker
+				addMarker(markers[i]);
+			}
 
-              // Add Marker Function
-              function addMarker(props){
-                var marker = new google.maps.Marker({
-                  position:props.coords,
-                  map:map,
-                  icon:props.iconImage
-                });
+			// Add Marker Function
+			function addMarker(props){
+				var marker = new google.maps.Marker({
+				  position:props.coords,
+				  map:map,
+				  icon:props.iconImage
+				});
 
-                // Check for customicon
-                if(props.iconImage){
-                  // Set icon image
-                  marker.setIcon(props.iconImage);
-                }
+				// Check for customicon
+				if(props.iconImage){
+				  // Set icon image
+				  marker.setIcon(props.iconImage);
+				}
 
-                // Check content
-                if(props.content){
-                  var infoWindow = new google.maps.InfoWindow({
-                    content:props.content
-                  });
+				// Check content
+				if(props.content){
+				  var infoWindow = new google.maps.InfoWindow({
+					content:props.content
+				  });
 
-                  marker.addListener('click', function(){
-                    infoWindow.open(map, marker);
-                  });
-                }     
-                if (i === 0) { 
-                    request.origin = props.coords; 
-                }
-                else if (i === markers.length - 1) {
-                    request.destination = props.coords;
-                    }
-                    else {
-                        if (props.coords) {
-                        request.waypoints.push({
-                        location: props.coords,
-                        stopover: true
-                            })
-                        }
+				  marker.addListener('click', function(){
+					infoWindow.open(map, marker);
+				  });
+				}     
+				if (i === 0) { 
+					request.origin = props.coords; 
+				}
+				else if (i === markers.length - 1) {
+					request.destination = props.coords;
+					}
+					else {
+						if (props.coords) {
+						request.waypoints.push({
+						location: props.coords,
+						stopover: true
+							})
+						}
 
-                    }
-                //End of Add Marker Function
-                }
-            directionsService.route(request,function(response,status){
-                if (status == "OK"){
-                    directionsDisplay.setDirections(response)
-                }
-            })
+					}
+				//End of Add Marker Function
             }
-          </script>
-          <script async defer
+            
+            // Helper function to convert duration string to minutes
+            function convertToMinutes(durationStr) {
+                var hours = 0;
+                var minutes = 0;
+                
+                if(durationStr.includes('hour')) {
+                    var hoursPart = durationStr.split('hour')[0].trim();
+                    hours = parseInt(hoursPart);
+                    
+                    if(durationStr.includes('min')) {
+                        var minutesPart = durationStr.split('hour')[1].split('min')[0].trim();
+                        minutes = parseInt(minutesPart);
+                    }
+                } else if(durationStr.includes('min')) {
+                    var minutesPart = durationStr.split('min')[0].trim();
+                    minutes = parseInt(minutesPart);
+                }
+                
+                return hours * 60 + minutes;
+            }
+            
+			directionsService.route(request, function(response, status){
+				if (status == "OK"){
+					directionsDisplay.setDirections(response);
+					
+					// Add traffic information
+					var route = response.routes[0];
+					var trafficInfoHTML = "";
+					
+					for(var i = 0; i < route.legs.length; i++) {
+						var leg = route.legs[i];
+						var start = leg.start_address.split(',')[0];
+						var end = leg.end_address.split(',')[0];
+						var distance = leg.distance.text;
+						var duration = leg.duration.text;
+						var durationInTraffic = leg.duration_in_traffic ? leg.duration_in_traffic.text : duration;
+						
+						trafficInfoHTML += "<div class='route-segment'>";
+						trafficInfoHTML += "<p><strong>From:</strong> " + start + " <strong>To:</strong> " + end + "</p>";
+						trafficInfoHTML += "<p><strong>Distance:</strong> " + distance + "</p>";
+						trafficInfoHTML += "<p><strong>Normal Duration:</strong> " + duration + "</p>";
+						trafficInfoHTML += "<p><strong>Duration with Traffic:</strong> " + durationInTraffic + "</p>";
+						
+						// Calculate traffic severity based on ratio of traffic duration to normal duration
+						var normalMinutes = convertToMinutes(duration);
+						var trafficMinutes = convertToMinutes(durationInTraffic);
+						
+						var trafficSeverity = "Low";
+						var severityColor = "green";
+						
+						if(trafficMinutes > normalMinutes * 1.5) {
+							trafficSeverity = "High";
+							severityColor = "red";
+						} else if(trafficMinutes > normalMinutes * 1.2) {
+							trafficSeverity = "Medium";
+							severityColor = "orange";
+						}
+						
+						trafficInfoHTML += "<p><strong>Traffic Condition:</strong> <span style='color:" + severityColor + ";'>" + trafficSeverity + "</span></p>";
+						trafficInfoHTML += "</div><hr>";
+					}
+					
+					// Display traffic information in the UI
+					document.getElementById("traffic-info").innerHTML = trafficInfoHTML;
+				}
+			});
+        }
+        </script>
+        <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCIZsk8SNPVQMm8Tu4TXieZT0xIqkMSECo&callback=initMap&libraries=geometry">
-            </script>
-
-           
-
+        </script>
         </body>
         </html>

@@ -1,5 +1,6 @@
 <?php
-require_once 'config.php';
+// Security: Move API keys to server-side configuration
+require_once 'config.php'; // This file should be outside web root and contain API keys
 
 // Security headers
 header('Content-Type: application/json');
@@ -28,33 +29,22 @@ if ($_SESSION['api_requests'] > MAX_REQUESTS_PER_MINUTE) {
     exit;
 }
 
-// Input validation
+// Get city parameter
 $city = $_GET['city'] ?? '';
-if (empty($city) || !preg_match('/^[a-zA-Z\s\-]+$/', $city)) {
-    http_response_code(400);
-    echo json_encode(['error' => 'Invalid city name']);
+
+// Validate input
+if (empty($city)) {
+    header('Content-Type: application/json');
+    echo json_encode(['error' => 'City parameter is required']);
     exit;
 }
 
-// Make the API request
-$url = sprintf(
-    'https://api.openweathermap.org/data/2.5/weather?q=%s&appid=%s&units=metric',
-    urlencode($city),
-    WEATHER_API_KEY
-);
+// Create API URL
+$apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" . urlencode($city) . "&units=metric&appid=" . OPENWEATHER_API_KEY;
 
-$ch = curl_init();
-curl_setopt_array($ch, [
-    CURLOPT_URL => $url,
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_TIMEOUT => 5,
-    CURLOPT_SSL_VERIFYPEER => true
-]);
+// Make API request
+$response = file_get_contents($apiUrl);
 
-$response = curl_exec($ch);
-$status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-curl_close($ch);
-
-// Forward the response
-http_response_code($status);
+// Return response
+header('Content-Type: application/json');
 echo $response; 

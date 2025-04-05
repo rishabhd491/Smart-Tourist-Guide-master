@@ -1,105 +1,186 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Travel EZ - About</title>
+	<title>Travel EZ - About Us</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
-	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" type="text/css" href="css/util.css">
-	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 	<style>
 		body {
 			font-family: 'Poppins', sans-serif;
-			background: #f8f9fa;
+			color: #444;
+			line-height: 1.7;
 		}
-		.container-contact100 {
-			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+		.navbar {
+			background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+			padding: 15px 0;
 		}
-		.wrap-contact100 {
-			border-radius: 20px;
-			box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-			padding: 0;
-			overflow: hidden;
-		}
-		.contact100-form-title {
-			position: relative;
-			background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.7)), url(images/bg-01.jpg);
-			background-size: cover;
-			background-position: center;
-			padding: 50px 15px;
-			text-align: center;
-			color: #fff;
-		}
-		.contact100-form-title-1 {
-			font-size: 2.5em;
+
+		.navbar-brand {
 			font-weight: 700;
-			text-transform: uppercase;
-			letter-spacing: 2px;
-			margin-bottom: 10px;
-			color: #fff;
-			text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+			font-size: 1.8rem;
+			color: white;
 		}
-		.contact100-form-title-2 {
-			font-size: 1.2em;
-			font-weight: 300;
-			color: rgba(255,255,255,0.9);
+		
+		.navbar-dark .navbar-nav .nav-link {
+			color: rgba(255,255,255,0.8);
+			font-weight: 500;
+			margin: 0 10px;
+			padding: 10px 0;
+			position: relative;
 		}
-		.developer-info {
-			padding: 40px;
+
+		.navbar-dark .navbar-nav .nav-link:after {
+			content: '';
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			width: 0;
+			height: 2px;
+			background-color: white;
+			transition: width 0.3s ease;
+		}
+
+		.navbar-dark .navbar-nav .nav-link:hover:after {
+			width: 100%;
+		}
+
+		.navbar-dark .navbar-nav .nav-link:hover {
+			color: white;
+		}
+
+		.navbar-dark .navbar-nav .nav-item.active .nav-link {
+			color: white;
+		}
+
+		.btn-signup {
+			background-color: rgba(255,255,255,0.2);
+			border-radius: 50px;
+			padding: 8px 20px !important;
+			border: 1px solid rgba(255,255,255,0.3);
+		}
+
+		.btn-signup:hover {
+			background-color: white;
+			color: #1e3c72 !important;
+		}
+
+		.hero-section {
+			height: 500px;
+			background: url('../images/home_slider.jpg') no-repeat center center;
+			background-size: cover;
+			position: relative;
+			display: flex;
+			align-items: center;
+			justify-content: center;
 			text-align: center;
-			background: #fff;
+			color: white;
 		}
+
+		.hero-section .overlay {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: linear-gradient(135deg, rgba(30, 60, 114, 0.8) 0%, rgba(42, 82, 152, 0.8) 100%);
+		}
+
+		.hero-title {
+			font-size: 3rem;
+			font-weight: 700;
+			margin-bottom: 20px;
+			position: relative;
+			z-index: 1;
+		}
+
+		.hero-subtitle {
+			font-size: 1.2rem;
+			margin-bottom: 30px;
+			position: relative;
+			z-index: 1;
+		}
+		
+		.about-section {
+			padding: 100px 0;
+			background-color: #fff;
+		}
+
+		.profile-card {
+			text-align: center;
+			padding: 40px;
+			background: white;
+			border-radius: 15px;
+			box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+			margin-bottom: 30px;
+			transition: all 0.3s ease;
+		}
+
+		.profile-card:hover {
+			transform: translateY(-10px);
+			box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+		}
+
 		.profile-image {
-			width: 180px;
-			height: 180px;
+			width: 200px;
+			height: 200px;
 			border-radius: 50%;
 			margin: 0 auto 25px;
 			display: block;
 			object-fit: cover;
-			border: 4px solid #fff;
+			border: 5px solid #f8f9fa;
 			box-shadow: 0 10px 25px rgba(0,0,0,0.1);
 			transition: transform 0.3s ease;
 		}
+
 		.profile-image:hover {
 			transform: scale(1.05);
 		}
-		.developer-info h2 {
-			font-size: 2em;
+
+		.profile-card h2 {
+			font-size: 2rem;
 			font-weight: 600;
-			color: #2d3436;
+			color: #333;
 			margin-bottom: 10px;
 		}
-		.developer-info p {
-			color: #636e72;
-			font-size: 1.1em;
-			line-height: 1.6;
+
+		.profile-card .role {
+			color: #666;
+			font-size: 1.1rem;
+			margin-bottom: 20px;
 		}
+
 		.contact-info {
 			margin: 25px 0;
 			padding: 20px;
 			background: #f8f9fa;
 			border-radius: 15px;
 		}
+
 		.contact-info p {
 			margin: 0;
 		}
+
 		.contact-info a {
-			color: #6c5ce7;
+			color: #1e3c72;
 			text-decoration: none;
 			transition: color 0.3s ease;
 		}
+
 		.contact-info a:hover {
-			color: #4834d4;
+			color: #2a5298;
 		}
+
 		.social-links {
 			margin: 30px 0;
 			display: flex;
 			justify-content: center;
 			gap: 20px;
 		}
+
 		.social-links a {
 			width: 45px;
 			height: 45px;
@@ -108,109 +189,366 @@
 			justify-content: center;
 			background: #f8f9fa;
 			border-radius: 50%;
-			color: #2d3436;
+			color: #333;
 			font-size: 20px;
 			transition: all 0.3s ease;
 		}
+
 		.social-links a:hover {
-			background: #6c5ce7;
+			background: #1e3c72;
 			color: #fff;
 			transform: translateY(-3px);
 		}
-		.app-description {
-			margin-top: 40px;
-			padding: 30px;
-			background: #f8f9fa;
-			border-radius: 15px;
-			text-align: left;
+
+		.features-section {
+			padding: 80px 0;
+			background-color: #f8f9fa;
 		}
-		.app-description h3 {
-			color: #2d3436;
-			font-size: 1.5em;
+
+		.section-title {
+			font-size: 2.5rem;
+			margin-bottom: 20px;
+			position: relative;
+			font-weight: 700;
+			text-align: center;
+		}
+
+		.section-subtitle {
+			font-size: 1.1rem;
+			color: #666;
+			margin-bottom: 50px;
+			text-align: center;
+		}
+
+		.feature-card {
+			text-align: center;
+			padding: 30px;
+			border-radius: 10px;
+			transition: all 0.3s ease;
+			height: 100%;
+			background: white;
+			box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+		}
+
+		.feature-card:hover {
+			transform: translateY(-10px);
+			box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+		}
+
+		.feature-icon {
+			margin-bottom: 20px;
+			font-size: 3rem;
+			color: #1e3c72;
+			height: 80px;
+			width: 80px;
+			line-height: 80px;
+			border-radius: 50%;
+			display: inline-block;
+			background-color: #f0f4ff;
+		}
+
+		.feature-card h3 {
+			margin-bottom: 15px;
+			font-weight: 600;
+		}
+
+		.feature-card p {
+			color: #666;
+			font-size: 0.95rem;
+		}
+
+		.footer {
+			background-color: #263238;
+			color: rgba(255,255,255,0.7);
+			padding: 80px 0 40px;
+		}
+
+		.footer h3, .footer h4 {
+			color: white;
 			margin-bottom: 20px;
 			font-weight: 600;
 		}
-		.feature-list {
+
+		.footer p {
+			color: rgba(255,255,255,0.7);
+			margin-bottom: 20px;
+		}
+
+		.footer-social-icons {
+			margin-top: 20px;
+		}
+
+		.footer-social-icons a {
+			display: inline-block;
+			width: 40px;
+			height: 40px;
+			line-height: 40px;
+			text-align: center;
+			border-radius: 50%;
+			background-color: rgba(255,255,255,0.1);
+			color: white;
+			margin-right: 10px;
+			transition: all 0.3s ease;
+		}
+
+		.footer-social-icons a:hover {
+			background-color: #1e3c72;
+			transform: translateY(-3px);
+		}
+
+		.footer-links {
 			list-style: none;
 			padding: 0;
-			margin: 20px 0;
 		}
-		.feature-list li {
-			padding: 10px 0;
-			color: #636e72;
+
+		.footer-links li {
+			margin-bottom: 10px;
+		}
+
+		.footer-links a {
+			color: rgba(255,255,255,0.7);
+			transition: all 0.3s ease;
+		}
+
+		.footer-links a:hover {
+			color: white;
+			padding-left: 5px;
+		}
+
+		.footer-contact {
+			list-style: none;
+			padding: 0;
+		}
+
+		.footer-contact li {
+			margin-bottom: 10px;
 			display: flex;
 			align-items: center;
 		}
-		.feature-list li i {
+
+		.footer-contact li i {
 			margin-right: 10px;
-			color: #6c5ce7;
+			color: #1e3c72;
+			font-size: 1.2rem;
 		}
-		.back-to-home {
-			display: inline-block;
-			margin-top: 30px;
+
+		.copyright {
+			color: rgba(255,255,255,0.5);
+			margin-top: 20px;
+			padding-top: 20px;
+			border-top: 1px solid rgba(255,255,255,0.1);
+		}
+
+		.btn-primary {
+			background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+			border: none;
+			border-radius: 50px;
 			padding: 12px 30px;
-			background: #6c5ce7;
-			color: #fff;
-			border-radius: 25px;
-			text-decoration: none;
-			transition: all 0.3s ease;
 			font-weight: 500;
+			transition: all 0.3s ease;
 		}
-		.back-to-home:hover {
-			background: #4834d4;
-			transform: translateY(-2px);
+
+		.btn-primary:hover {
+			background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%);
+			transform: translateY(-3px);
 			box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-			color: #fff;
 		}
 	</style>
 </head>
 <body>
-	<div class="container-contact100">
-		<div class="wrap-contact100">
-			<div class="contact100-form-title">
-				<span class="contact100-form-title-1">
-					Travel EZ
-				</span>
-				<span class="contact100-form-title-2">
-					Your Smart Travel Companion
-				</span>
+	<!-- Navigation Bar -->
+	<nav class="navbar navbar-expand-lg navbar-dark">
+		<div class="container">
+			<a class="navbar-brand" href="../index.html">
+				<i class="fas fa-map-marked-alt"></i> Travel EZ
+			</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="../index.html">Home</a>
+					</li>
+					<li class="nav-item active">
+						<a class="nav-link" href="aboutus.html">About Us</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="../travelez/">Destinations</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="../login/login.html">Login</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link btn-signup" href="../signup.html">Sign Up</a>
+					</li>
+				</ul>
 			</div>
+		</div>
+	</nav>
 
-			<div class="developer-info">
-				<img src="images/profile.jpg" alt="Rishabh Dubey" class="profile-image">
-				<h2>Rishabh Dubey</h2>
-				<p>Full Stack Developer & AI Enthusiast</p>
-				
-				<div class="contact-info">
-					<p><i class="fa fa-envelope"></i> <a href="mailto:rishabhd491@gmail.com">rishabhd491@gmail.com</a></p>
-				</div>
-
-				<div class="social-links">
-					<a href="#" title="GitHub"><i class="fa fa-github"></i></a>
-					<a href="#" title="LinkedIn"><i class="fa fa-linkedin"></i></a>
-					<a href="#" title="Twitter"><i class="fa fa-twitter"></i></a>
-				</div>
-
-				<div class="app-description">
-					<h3>About Travel EZ</h3>
-					<p>Travel EZ is your intelligent travel companion, designed to make exploring new places effortless and enjoyable. Our smart platform combines cutting-edge technology with user-friendly features to enhance your travel experience.</p>
-					
-					<ul class="feature-list">
-						<li><i class="fa fa-map-marker"></i> Smart location discovery and routing</li>
-						<li><i class="fa fa-cloud"></i> Real-time weather information</li>
-						<li><i class="fa fa-clock-o"></i> Optimal visit planning and scheduling</li>
-						<li><i class="fa fa-star"></i> Personalized recommendations</li>
-						<li><i class="fa fa-road"></i> Intelligent route optimization</li>
-					</ul>
-
-					<a href="../index.html" class="back-to-home">Back to Home</a>
+	<!-- Hero Section -->
+	<div class="hero-section">
+		<div class="overlay"></div>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 text-center">
+					<h1 class="hero-title">About Travel EZ</h1>
+					<p class="hero-subtitle">Meet the team behind your smart travel companion</p>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
-	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-	<script src="js/main.js"></script>
+	<!-- About Section -->
+	<div class="about-section">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-lg-8">
+					<div class="profile-card">
+						<img src="images/profile.jpg" alt="Rishabh Dubey" class="profile-image">
+						<h2>Rishabh Dubey</h2>
+						<p class="role">Full Stack Developer & AI Enthusiast</p>
+						
+						<div class="contact-info">
+							<p><i class="fas fa-envelope"></i> <a href="mailto:rishabhd491@gmail.com">rishabhd491@gmail.com</a></p>
+						</div>
+
+						<div class="social-links">
+							<a href="#" title="GitHub"><i class="fab fa-github"></i></a>
+							<a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+							<a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+						</div>
+
+						<div class="mt-4">
+							<p>Travel EZ is my passion project, born from a desire to combine my love for coding with my enthusiasm for travel. I believe that technology should make our lives easier, especially when exploring new places.</p>
+							<a href="../index.html" class="btn btn-primary mt-3">Back to Home</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Features Section -->
+	<div class="features-section">
+		<div class="container">
+			<h2 class="section-title">What Makes Travel EZ Special</h2>
+			<p class="section-subtitle">Our platform combines cutting-edge technology with user-friendly features</p>
+			
+			<div class="row">
+				<div class="col-md-4 mb-4">
+					<div class="feature-card">
+						<div class="feature-icon">
+							<i class="fas fa-map-marked-alt"></i>
+						</div>
+						<h3>Smart Navigation</h3>
+						<p>Discover the best routes to your favorite destinations with real-time maps and personalized directions.</p>
+					</div>
+				</div>
+				<div class="col-md-4 mb-4">
+					<div class="feature-card">
+						<div class="feature-icon">
+							<i class="fas fa-cloud-sun"></i>
+						</div>
+						<h3>Weather Updates</h3>
+						<p>Get real-time weather forecasts for your travel destinations to plan better and avoid surprises.</p>
+					</div>
+				</div>
+				<div class="col-md-4 mb-4">
+					<div class="feature-card">
+						<div class="feature-icon">
+							<i class="fas fa-utensils"></i>
+						</div>
+						<h3>Local Recommendations</h3>
+						<p>Discover top-rated restaurants, attractions, and hotels based on user reviews and preferences.</p>
+					</div>
+				</div>
+				<div class="col-md-4 mb-4">
+					<div class="feature-card">
+						<div class="feature-icon">
+							<i class="fas fa-clock"></i>
+						</div>
+						<h3>Optimal Planning</h3>
+						<p>Plan your visits with optimal timing based on opening hours, crowd levels, and weather conditions.</p>
+					</div>
+				</div>
+				<div class="col-md-4 mb-4">
+					<div class="feature-card">
+						<div class="feature-icon">
+							<i class="fas fa-language"></i>
+						</div>
+						<h3>Language Support</h3>
+						<p>Break language barriers with our translation features, helping you communicate effectively while traveling.</p>
+					</div>
+				</div>
+				<div class="col-md-4 mb-4">
+					<div class="feature-card">
+						<div class="feature-icon">
+							<i class="fas fa-dollar-sign"></i>
+						</div>
+						<h3>Budget Calculator</h3>
+						<p>Plan your travel expenses with our smart budget calculator that adapts to your preferences and itinerary.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Footer -->
+	<footer class="footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4">
+					<h3><i class="fas fa-map-marked-alt"></i> Travel EZ</h3>
+					<p>Your smart travel companion that helps you discover amazing places around the world.</p>
+					<div class="footer-social-icons">
+						<a href="#"><i class="fab fa-facebook-f"></i></a>
+						<a href="#"><i class="fab fa-twitter"></i></a>
+						<a href="#"><i class="fab fa-instagram"></i></a>
+						<a href="#"><i class="fab fa-pinterest"></i></a>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<h4>Links</h4>
+					<ul class="footer-links">
+						<li><a href="../index.html">Home</a></li>
+						<li><a href="aboutus.html">About Us</a></li>
+						<li><a href="#">Destinations</a></li>
+						<li><a href="#">Blog</a></li>
+						<li><a href="#">Contact</a></li>
+					</ul>
+				</div>
+				<div class="col-md-3">
+					<h4>Discover</h4>
+					<ul class="footer-links">
+						<li><a href="#">Top Hotels</a></li>
+						<li><a href="#">Best Restaurants</a></li>
+						<li><a href="#">Popular Attractions</a></li>
+						<li><a href="#">Travel Tips</a></li>
+						<li><a href="#">Weather Forecast</a></li>
+					</ul>
+				</div>
+				<div class="col-md-3">
+					<h4>Contact Us</h4>
+					<ul class="footer-contact">
+						<li><i class="fas fa-map-marker-alt"></i> 123 Travel Street, City</li>
+						<li><i class="fas fa-phone"></i> +1 234 567 890</li>
+						<li><i class="fas fa-envelope"></i> info@travelez.com</li>
+					</ul>
+				</div>
+			</div>
+			<div class="row mt-4">
+				<div class="col-md-12 text-center">
+					<p class="copyright">© 2023 Travel EZ - Smart Tourist Guide. All rights reserved.</p>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+	<!-- Scripts -->
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
